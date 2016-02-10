@@ -1,12 +1,3 @@
-import java.util.function.Predicate;
-
-import com.mongodb.Block;
-import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoDatabase;
-
-import org.bson.Document;
-
 import com.google.gson.Gson;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -14,32 +5,25 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
-import static java.util.Arrays.asList;
+import java.util.function.Predicate;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Predicate<String> i  = (s)-> s.length() > 5;
+        Predicate<String> i = (s) -> s.length() > 5;
         System.out.println(i.test("java2s.com "));
 
-        MongoClient mongoClient = new MongoClient( "127.0.0.1", 27018);
+        MongoClient mongoClient = new MongoClient("127.0.0.1", 27018);
         MongoDatabase db = mongoClient.getDatabase("test");
         Employee employee = new Employee(); // Create java object
         employee.setNo(1L);
         employee.setName("yogesh");
-        // Deserialize object to json string
         Gson gson = new Gson();
         String json = gson.toJson(employee);
-        // Parse to bson document and insert
         Document doc = Document.parse(json);
 
-            db.getCollection("NameColl").insertOne(doc);
+        db.getCollection("NameColl").insertOne(doc);
 
 
         // Retrieve to ensure object was inserted
